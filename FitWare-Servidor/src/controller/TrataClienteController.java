@@ -1,0 +1,81 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package controller;
+
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.net.Socket;
+import java.util.ArrayList;
+import model.UsuarioDao;
+import modelDominio.Usuario;
+
+/**
+ *
+ * @author aluno
+ */
+public class TrataClienteController extends Thread{
+    private ObjectInputStream in;
+    private ObjectOutputStream out;
+    private Socket s;
+    private int idUnico;
+    
+
+    public TrataClienteController(ObjectInputStream in, ObjectOutputStream out, Socket s, int idUnico)
+    {
+        this.in = in;
+        this.out = out;
+        this.s = s;
+        this.idUnico = idUnico;
+        
+    }
+    
+     @Override
+    public void run(){
+        String comando;
+         System.out.println("Esperando comandos do cliente");
+         try {
+            comando = (String) in.readObject();
+            while(!comando.equalsIgnoreCase("fim"))
+            {
+            //tratando comandos do cliente
+            System.out.println("Cliente "+idUnico+" enviou comando: "+comando);
+            if (comando.equalsIgnoreCase("EfetuarLogin"))
+            {
+                out.writeObject("ok");
+                Usuario user = (Usuario) in.readObject();
+                //consultar pra ver se o usuario existe
+                UsuarioDao usdao = new UsuarioDao();
+                Usuario userlogado = usdao.efetuarLogin(user);
+                out.writeObject(userlogado);
+            }
+            else if (comando.equalsIgnoreCase("UserInserir")) {
+                    out.writeObject("ok");
+                    //esperando o objeto bike vir do cliente
+                    Usuario user = (Usuario) in.readObject();
+                    //criando um Dao para armazenar no Banco
+                    UsuarioDao userdao = new UsuarioDao();
+                    if (userdao.userInserir(user) == -1){
+                        out.writeObject("ok");
+                    } else {
+                        out.writeObject("nok");
+                    }
+            }
+            else if (comando.equalsIgnoreCase("UsuarioLista"))
+            {
+                    UsuarioDao userdao = new UsuarioDao();
+                    out.writeObject(userdao.getLista());
+            }
+            else if (comando.equalsIgnoreCase("UsuarioListaNome")) {
+                    out.writeObject("ok");
+                    String nome = (String) in.readObject();
+                    UsuarioDao userdao = new UsuarioDao();
+                    out.writeObject(userdao.getListaNome(nome));
+                }
+            comando = (String) in.readObject();
+            }
+         } catch (Exception e) {
+         }
+    }
+}
