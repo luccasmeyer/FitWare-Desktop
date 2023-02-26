@@ -16,16 +16,12 @@ public class MenuPrincipalFrom extends javax.swing.JDialog {
     /**
      * Creates new form MenuPrincipalFrom
      */
-    public MenuPrincipalFrom(Usuario usuario) {
-        this.usuario=usuario;
-        initComponents();
-        jLabel3.setText(this.usuario.getNome());
+
         
-    }
     
     public MenuPrincipalFrom() {
         initComponents();
-        
+        jLabel3.setText(FitWareCliente.ccont.usuario.getNome());
     }
 
     /**
@@ -86,6 +82,11 @@ public class MenuPrincipalFrom extends javax.swing.JDialog {
         jLabel3.setText("[usuario]");
 
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagens/fitware 100.png"))); // NOI18N
+        jLabel4.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel4MouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -168,6 +169,11 @@ public class MenuPrincipalFrom extends javax.swing.JDialog {
         formexercicio.setVisible(true);
         dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jLabel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseClicked
+        SobreAppFrom formsobreapp = new SobreAppFrom();
+        formsobreapp.setVisible(true);
+    }//GEN-LAST:event_jLabel4MouseClicked
 
     /**
      * @param args the command line arguments

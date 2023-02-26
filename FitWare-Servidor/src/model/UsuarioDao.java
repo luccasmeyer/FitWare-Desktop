@@ -9,6 +9,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import modelDominio.Administrador;
 import modelDominio.Comum;
+import modelDominio.Exercicio;
 import modelDominio.Usuario;
 
 public class UsuarioDao {
@@ -138,7 +139,7 @@ public class UsuarioDao {
     }
     
     // Método que retorna todas os usuários cadastradas filtrando por nome
-    public ArrayList<Usuario> getListaNome(String nomeUsuario){
+    public ArrayList<Usuario> getUsuarioListaNome(String nomeUsuario){
         PreparedStatement stmt = null;
         ArrayList<Usuario> listaUsuario = new ArrayList<>();
         
@@ -169,4 +170,48 @@ public class UsuarioDao {
             return null;
         }
     }
+    
+    public int usuarioExcluir(Usuario user){
+        //vai receber o script SQL de INSERT
+        PreparedStatement stmt = null;
+        try {
+            try {
+                //desliga o autocommit
+                con.setAutoCommit(false);
+                //o ? será substituido pelo valor
+                String sql = "delete from usuario where codUsuario = ?";
+                stmt = con.prepareStatement(sql);
+                //substituir os ? do script SQL:
+                stmt.setInt(1, user.getCodUsuario());
+                
+                //executar o script SQL:
+                stmt.execute();
+                //efetivar a transação:
+                con.commit();
+                return -1;  // <- indica que tudo deu CERTO                
+                
+            } catch (SQLException e) {
+                try {
+                    con.rollback(); //cancelando
+                    return e.getErrorCode();
+                } catch (SQLException ex) {
+                    return ex.getErrorCode();
+                }
+            }
+        } finally { //isso será executado independente se der ERRO ou NÃO
+            try {
+                stmt.close();
+                con.setAutoCommit(true);
+                con.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+                return e.getErrorCode();
+            }
+        }
+        
+    }
+    
 }
+
+
+    

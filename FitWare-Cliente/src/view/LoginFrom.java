@@ -123,8 +123,8 @@ public class LoginFrom extends javax.swing.JDialog {
             FitWareCliente.ccont.usuario = usuarioSelecionado;
             
             //passando o nome do usuário para as outras telas
-            MenuPrincipalFrom MenuPrincipalfrom = new MenuPrincipalFrom(usuarioSelecionado);
-            ListaUsuarios ListaUsuarios = new ListaUsuarios(usuarioSelecionado);
+            MenuPrincipalFrom MenuPrincipalfrom = new MenuPrincipalFrom();
+            ListaUsuarios ListaUsuarios = new ListaUsuarios();
             
             MenuPrincipalfrom.setVisible(true);
             

@@ -4,7 +4,9 @@
  */
 package view;
 
-import modelDominio.Usuario;
+import javax.swing.JOptionPane;
+import modelDominio.Exercicio;
+import view.tablemodel.ExercicioTableModel;
 
 /**
  *
@@ -12,18 +14,31 @@ import modelDominio.Usuario;
  */
 public class ListaExercicioFrom extends javax.swing.JDialog {
     
-    private Usuario usuario;
+        private ExercicioTableModel exerModel;
+    // Método que atualiza a jTable
+    private void atualizaTabela(){
+        switch(cmbCampo.getSelectedIndex()){
+            case 1: exerModel = new ExercicioTableModel(FitWareCliente.ccont.getExercicioListaNome(jtxtPesquisa.getText()));
+                break;
+            default: exerModel= new ExercicioTableModel(FitWareCliente.ccont.getExercicioLista());
+            
+        }
+        
+        jTableExercicios.setModel(exerModel);
+    }
+    
+    private Exercicio exercicio;
     /**
      * Creates new form MenuPrincipalFrom
      */
-    public ListaExercicioFrom(Usuario usuario) {
-        this.usuario=usuario;
-        initComponents();
-        jLabel3.setText(this.usuario.getNome());
-        
-    }
+
+    /**
+     * Creates new form MenuPrincipalFrom
+     */
     public ListaExercicioFrom() {
         initComponents();
+        atualizaTabela();
+        jLabel3.setText(FitWareCliente.ccont.usuario.getNome());
     }
 
     /**
@@ -38,54 +53,90 @@ public class ListaExercicioFrom extends javax.swing.JDialog {
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
+        acHome = new javax.swing.JLabel();
+        acExercicio = new javax.swing.JLabel();
+        acUsuarios = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jTableExercicios = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
         btnSair = new javax.swing.JButton();
+        cmbCampo = new javax.swing.JComboBox<>();
+        jtxtPesquisa = new javax.swing.JTextField();
+        jLabel1 = new javax.swing.JLabel();
+        jButton2 = new javax.swing.JButton();
+
+        setResizable(false);
 
         jPanel2.setBackground(new java.awt.Color(76, 86, 219));
 
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("Gerenciamento de exercícios");
 
+        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagens/fitware 100.png"))); // NOI18N
+
+        acHome.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagens/acHome.png"))); // NOI18N
+        acHome.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                acHomeMouseClicked(evt);
+            }
+        });
+
+        acExercicio.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagens/acExercicio.png"))); // NOI18N
+        acExercicio.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                acExercicioMouseClicked(evt);
+            }
+        });
+
+        acUsuarios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagens/acUsuarios.png"))); // NOI18N
+        acUsuarios.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                acUsuariosMouseClicked(evt);
+            }
+        });
+
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("[usuario]");
-
-        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagens/fitware 100.png"))); // NOI18N
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(35, 35, 35)
-                .addComponent(jLabel4)
+                .addGap(23, 23, 23)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(jLabel4)
+                    .addComponent(jLabel2))
+                .addGap(89, 89, 89)
+                .addComponent(acExercicio)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(acHome)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(acUsuarios)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel3)
-                .addContainerGap())
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addComponent(jLabel2)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(25, 25, 25))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(acUsuarios)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabel4))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(44, 44, 44)
-                        .addComponent(jLabel3)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel2)
+                        .addComponent(jLabel4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel2))
+                    .addComponent(acExercicio)
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jLabel3)
+                        .addComponent(acHome)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jTableExercicios.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null},
                 {null, null},
@@ -104,9 +155,10 @@ public class ListaExercicioFrom extends javax.swing.JDialog {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(jTableExercicios);
 
         jButton1.setBackground(new java.awt.Color(76, 86, 219));
+        jButton1.setFont(new java.awt.Font("Swis721 LtEx BT", 1, 28)); // NOI18N
         jButton1.setForeground(new java.awt.Color(255, 255, 255));
         jButton1.setText("+");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -116,10 +168,34 @@ public class ListaExercicioFrom extends javax.swing.JDialog {
         });
 
         btnSair.setBackground(new java.awt.Color(76, 86, 219));
-        btnSair.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagens/porta 25.png"))); // NOI18N
+        btnSair.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagens/Volta.png"))); // NOI18N
         btnSair.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnSairActionPerformed(evt);
+            }
+        });
+
+        cmbCampo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Nenhum", "Nome" }));
+        cmbCampo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbCampoActionPerformed(evt);
+            }
+        });
+
+        jtxtPesquisa.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jtxtPesquisaKeyReleased(evt);
+            }
+        });
+
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagens/pesquisa.png"))); // NOI18N
+
+        jButton2.setBackground(new java.awt.Color(76, 86, 219));
+        jButton2.setForeground(new java.awt.Color(255, 255, 255));
+        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagens/lixeira.png"))); // NOI18N
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
             }
         });
 
@@ -127,28 +203,44 @@ public class ListaExercicioFrom extends javax.swing.JDialog {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(34, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                .addContainerGap(43, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(btnSair)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(443, 443, 443)
+                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton1))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 554, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(41, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 563, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addComponent(jLabel1)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(jtxtPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(cmbCampo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(44, Short.MAX_VALUE))
+            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(19, 19, 19)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton1)
-                    .addComponent(btnSair))
-                .addGap(0, 25, Short.MAX_VALUE))
+                    .addComponent(jLabel1)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(cmbCampo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jtxtPesquisa, javax.swing.GroupLayout.DEFAULT_SIZE, 29, Short.MAX_VALUE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnSair, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButton1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(8, 8, 8))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -165,11 +257,14 @@ public class ListaExercicioFrom extends javax.swing.JDialog {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         GExerciciosFrom formaddexercicios = new GExerciciosFrom();
+        formaddexercicios.setModal(true);
         formaddexercicios.setVisible(true);
+        atualizaTabela();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void btnSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSairActionPerformed
@@ -179,6 +274,43 @@ public class ListaExercicioFrom extends javax.swing.JDialog {
         formmenu.setVisible(true);
         dispose();
     }//GEN-LAST:event_btnSairActionPerformed
+
+    private void acHomeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_acHomeMouseClicked
+        MenuPrincipalFrom MenuPrincipalfrom = new MenuPrincipalFrom();
+        MenuPrincipalfrom.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_acHomeMouseClicked
+
+    private void acExercicioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_acExercicioMouseClicked
+
+    }//GEN-LAST:event_acExercicioMouseClicked
+
+    private void acUsuariosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_acUsuariosMouseClicked
+        ListaUsuarios usuarios = new ListaUsuarios();
+        usuarios.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_acUsuariosMouseClicked
+
+    private void cmbCampoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbCampoActionPerformed
+        atualizaTabela();
+    }//GEN-LAST:event_cmbCampoActionPerformed
+
+    private void jtxtPesquisaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtxtPesquisaKeyReleased
+        atualizaTabela();
+    }//GEN-LAST:event_jtxtPesquisaKeyReleased
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+//Botão REMOVER
+        if (jTableExercicios.getSelectedRow() >= 0) {
+            if (JOptionPane.showConfirmDialog(this, "Tem certeza que deseja excluir?", this.getTitle(), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+                Exercicio exercicio = exerModel.getExercicio(jTableExercicios.getSelectedRow());
+                if (exercicio != null) {
+                    FitWareCliente.ccont.exercicioExcluir(exercicio);
+                    atualizaTabela();
+                }
+            }
+        }
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -216,14 +348,21 @@ public class ListaExercicioFrom extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel acExercicio;
+    private javax.swing.JLabel acHome;
+    private javax.swing.JLabel acUsuarios;
     private javax.swing.JButton btnSair;
+    private javax.swing.JComboBox<String> cmbCampo;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable jTableExercicios;
+    private javax.swing.JTextField jtxtPesquisa;
     // End of variables declaration//GEN-END:variables
 }

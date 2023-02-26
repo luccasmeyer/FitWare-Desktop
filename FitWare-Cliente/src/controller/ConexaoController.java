@@ -3,6 +3,7 @@ package controller;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
+import modelDominio.Exercicio;
 import modelDominio.Usuario;
 
 /**
@@ -55,7 +56,7 @@ public class ConexaoController {
         }
     }
     
-     //Método responsável por mandar o comando lá do MarcaDao pro servidor:
+     //Método responsável por mandar o comando lá do UsuarioDao pro servidor:
     public ArrayList<Usuario> getUsuarioLista(){
         try {
             out.writeObject("UsuarioLista");
@@ -66,13 +67,91 @@ public class ConexaoController {
         }
     }
     
-    public ArrayList<Usuario> getListaNome(String pesquisa){
+    public ArrayList<Usuario> getUsuarioListaNome(String pesquisa){
         String msg;
         try {
             out.writeObject("UsuarioListaNome");
             msg = (String) in.readObject(); // recebi o ok
             out.writeObject(pesquisa); // envio a pesquisa pro servidor
             return (ArrayList<Usuario>)in.readObject(); // recebo a lista
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+    
+    public Boolean exercicioInserir(Exercicio exer){
+        String msg = "";
+        try {
+            out.writeObject("ExercicioInserir");
+            msg = (String) in.readObject(); //lendo ok
+            out.writeObject(exer); //escrevendo o exercicio
+            msg = (String) in.readObject(); //lendo ok
+            if (msg.equals("ok")){
+                return true;
+            } else {
+                return false;
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return false;
+        }
+    }
+    
+        public Boolean usuarioExcluir(Usuario user){
+        String msg = "";
+        try {
+            out.writeObject("usuarioExcluir");
+            msg = (String) in.readObject(); //lendo ok
+            out.writeObject(user); //escrevendo a bike
+            msg = (String) in.readObject(); //lendo ok
+            if (msg.equals("ok")){
+                return true;
+            } else {
+                return false;
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return false;
+        }
+    }
+    
+    public Boolean exercicioExcluir(Exercicio exer){
+        String msg = "";
+        try {
+            out.writeObject("ExercicioExcluir");
+            msg = (String) in.readObject(); //lendo ok
+            out.writeObject(exer); //escrevendo a bike
+            msg = (String) in.readObject(); //lendo ok
+            if (msg.equals("ok")){
+                return true;
+            } else {
+                return false;
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return false;
+        }
+    }
+    
+         //Método responsável por mandar o comando lá do ExercicioDao pro servidor:
+    public ArrayList<Exercicio> getExercicioLista(){
+        try {
+            out.writeObject("ExercicioLista");
+            return (ArrayList<Exercicio>)in.readObject(); // Vai retornar a lista de usuarios
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+    
+    public ArrayList<Exercicio> getExercicioListaNome(String pesquisa){
+        String msg;
+        try {
+            out.writeObject("ExercicioListaNome");
+            msg = (String) in.readObject(); // recebi o ok
+            out.writeObject(pesquisa); // envio a pesquisa pro servidor
+            return (ArrayList<Exercicio>)in.readObject(); // recebo a lista
         } catch (Exception e) {
             e.printStackTrace();
             return null;
