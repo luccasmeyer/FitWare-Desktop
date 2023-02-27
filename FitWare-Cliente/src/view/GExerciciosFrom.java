@@ -49,6 +49,8 @@ public class GExerciciosFrom extends javax.swing.JDialog {
         jLabel5 = new javax.swing.JLabel();
         jTextFieldRepeticoes = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
+        jtfTipo = new javax.swing.JTextField();
+        jLabel8 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -116,6 +118,14 @@ public class GExerciciosFrom extends javax.swing.JDialog {
         jLabel6.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel6.setText("Repetições:");
 
+        jtfTipo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jtfTipoActionPerformed(evt);
+            }
+        });
+
+        jLabel8.setText("Grupo Muscular");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -145,12 +155,6 @@ public class GExerciciosFrom extends javax.swing.JDialog {
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(jLabel4)
                 .addGap(37, 37, 37))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(72, 72, 72)
-                .addComponent(jButtonSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(74, 74, 74)
-                .addComponent(jButtonCancelar)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -159,6 +163,20 @@ public class GExerciciosFrom extends javax.swing.JDialog {
                         .addComponent(jLabel3)
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(72, 72, 72)
+                        .addComponent(jButtonSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(74, 74, 74)
+                        .addComponent(jButtonCancelar))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jtfTipo, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel8)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -190,7 +208,11 @@ public class GExerciciosFrom extends javax.swing.JDialog {
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jTextFieldDescricao, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 49, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel8)
+                .addGap(3, 3, 3)
+                .addComponent(jtfTipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButtonSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -206,7 +228,12 @@ public class GExerciciosFrom extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(this, "Preencha o nome do exercício",
                     this.getTitle(), JOptionPane.ERROR_MESSAGE);
             jTextFieldNome.requestFocus();
-        } else if (jTextFieldSeries.getText().equals("")) {
+        }else if(jtfTipo.getText().equals("")){
+            JOptionPane.showMessageDialog(this, "Preencha o tipo do exercicio",
+            this.getTitle(), JOptionPane.ERROR_MESSAGE);
+            jtfTipo.requestFocus();
+        } 
+        else if (jTextFieldSeries.getText().equals("")) {
             JOptionPane.showMessageDialog(this, "Preencha a quantidade de séries",
                     this.getTitle(), JOptionPane.ERROR_MESSAGE);
             jTextFieldSeries.requestFocus();
@@ -219,7 +246,7 @@ public class GExerciciosFrom extends javax.swing.JDialog {
             if (imagem != null) { //se o usuário setou uma imagem então salva 
                 ex = new Exercicio(jTextFieldNome.getText(), jTextFieldDescricao.getText(), jTextFieldSeries.getText(), jTextFieldRepeticoes.getText(), imagem.getImagem());
             } else {
-                ex = new Exercicio(jTextFieldNome.getText(), jTextFieldDescricao.getText(), jTextFieldSeries.getText(), jTextFieldRepeticoes.getText(), null);
+                ex = new Exercicio(jTextFieldNome.getText(), jTextFieldDescricao.getText(), jTextFieldSeries.getText(), jTextFieldRepeticoes.getText(), Integer.parseInt(jtfTipo.getText()));
             }
             Boolean ok = FitWareCliente.ccont.exercicioInserir(ex); //Método Inserir é chamado
 
@@ -249,6 +276,10 @@ public class GExerciciosFrom extends javax.swing.JDialog {
     private void jButtonCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCancelarActionPerformed
         dispose();
     }//GEN-LAST:event_jButtonCancelarActionPerformed
+
+    private void jtfTipoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtfTipoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtfTipoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -296,10 +327,12 @@ public class GExerciciosFrom extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JTextField jTextFieldDescricao;
     private javax.swing.JTextField jTextFieldNome;
     private javax.swing.JTextField jTextFieldRepeticoes;
     private javax.swing.JTextField jTextFieldSeries;
+    private javax.swing.JTextField jtfTipo;
     // End of variables declaration//GEN-END:variables
 }

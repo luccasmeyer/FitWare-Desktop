@@ -78,6 +78,11 @@ public class GAddExercicioNaGrade extends javax.swing.JDialog {
         jLabel2.setText("Exercício:");
 
         jComboBoxExercicio.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Deu erro, mano" }));
+        jComboBoxExercicio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBoxExercicioActionPerformed(evt);
+            }
+        });
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel3.setText("Repetições");
@@ -186,6 +191,10 @@ public class GAddExercicioNaGrade extends javax.swing.JDialog {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jComboBoxExercicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxExercicioActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBoxExercicioActionPerformed
 
     /**
      * @param args the command line arguments

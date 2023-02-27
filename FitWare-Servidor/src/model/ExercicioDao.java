@@ -23,19 +23,54 @@ public class ExercicioDao {
      * @param ex
      * @return
      */
+    public int salvarercicio(int codUsuario, Exercicio exer){
+        PreparedStatement stmt = null;
+        try {
+            try {
+               con.setAutoCommit(false);
+                String sql = "insert into usuario_has_exercicio(usuario_codUsuario , exercicio_codExercicio) values (?,?)";
+             stmt = con.prepareStatement(sql);
+               stmt.setInt(1, codUsuario);
+               stmt.setInt(2, exer.getCodExercicio());
+          
+               stmt.execute();
+            
+                con.commit();
+               return -1; //-1 indica que tudo deu certo
+            } catch (SQLException e) {
+               try {
+                    con.rollback();
+                    e.printStackTrace();
+                    return e.getErrorCode();
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+                    return ex.getErrorCode();
+                }
+            }
+        } finally {
+            try {
+                stmt.close();
+                con.setAutoCommit(true);
+                con.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+                return e.getErrorCode();
+            }
+        }
+    }
     public int exercicioInserir(Exercicio exer)
     {
         PreparedStatement stmt = null;
         try {
             try {
                con.setAutoCommit(false);
-                String sql = "insert into exercicio (nome, descricao, series, repeticoes, imagem) values (?,?,?,?,?)";
+                String sql = "insert into exercicio (nome, descricao, series, repeticoes, tipo) values (?,?,?,?,?)";
              stmt = con.prepareStatement(sql);
                stmt.setString(1, exer.getNomeExercicio());
                stmt.setString(2, exer.getDescricao());
                stmt.setString(3, exer.getSeries());
                stmt.setString(4, exer.getRepeticoes());
-               stmt.setBytes(5, exer.getImagem());
+               stmt.setInt(5, exer.getTipoexercicio());
                stmt.execute();
             
                 con.commit();

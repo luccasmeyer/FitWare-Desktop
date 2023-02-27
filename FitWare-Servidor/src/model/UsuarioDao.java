@@ -160,7 +160,7 @@ public class UsuarioDao {
             
             //Se existe um resultado:
             while (res.next()){ 
-                Usuario user = new Usuario(res.getInt("codUsuario"), res.getString("nome"));
+                Usuario user = new Usuario(res.getInt("codUsuario"), res.getString("nome"), res.getString("email"));
                 // Ali em cima, dentro das "" é o nome do campo no banco de dados
                 System.out.println(user);
                 listaUsuarios.add(user);

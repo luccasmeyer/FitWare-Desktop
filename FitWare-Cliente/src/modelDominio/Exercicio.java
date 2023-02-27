@@ -19,6 +19,7 @@ public class Exercicio implements Serializable{
     private String series;
     private String repeticoes;
     private byte[] imagem;
+    private int tipoexercicio;
     
     
     //construtores
@@ -50,6 +51,23 @@ public class Exercicio implements Serializable{
         this.nomeExercicio = nomeExercicio;
         this.series = series;
         this.repeticoes = repeticoes;
+    }
+
+    public Exercicio(int codExercicio, String nomeExercicio, String descricao, String series, String repeticoes, int tipoexercicio) {
+        this.codExercicio = codExercicio;
+        this.nomeExercicio = nomeExercicio;
+        this.descricao = descricao;
+        this.series = series;
+        this.repeticoes = repeticoes;
+        this.tipoexercicio = tipoexercicio;
+    }
+
+    public Exercicio(String nomeExercicio, String descricao, String series, String repeticoes, int tipoexercicio) {
+        this.nomeExercicio = nomeExercicio;
+        this.descricao = descricao;
+        this.series = series;
+        this.repeticoes = repeticoes;
+        this.tipoexercicio = tipoexercicio;
     }
     
     
@@ -102,8 +120,18 @@ public class Exercicio implements Serializable{
         this.repeticoes = repeticoes;
     }
 
+        public int getTipoexercicio() {
+        return tipoexercicio;
+    }
+
+    public void setTipoexercicio(int tipoexercicio) {
+        this.tipoexercicio = tipoexercicio;
+    }
+    
     @Override
     public String toString() {
         return "Exercicio{" + "codExercicio=" + codExercicio + ", nomeExercicio=" + nomeExercicio + ", descricao=" + descricao + ", series=" + series + ", repeticoes=" + repeticoes + ", imagem=" + imagem + '}';
     }
+
+
 }

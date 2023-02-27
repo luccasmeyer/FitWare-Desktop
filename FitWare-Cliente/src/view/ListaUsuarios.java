@@ -280,6 +280,7 @@ public class ListaUsuarios extends javax.swing.JDialog {
        GUsuarioFrom formusuario = new GUsuarioFrom();
        formusuario.setVisible(true);
        atualizaTabela();
+       dispose();
     }//GEN-LAST:event_jTableUsuarioMouseClicked
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
