@@ -63,7 +63,8 @@ public class TrataClienteController extends Thread{
                     } else {
                         out.writeObject("nok");
                     }
-            }else if (comando.equalsIgnoreCase("usuarioExcluir")) {
+            }
+            else if (comando.equalsIgnoreCase("usuarioExcluir")) {
                     out.writeObject("ok");
                     //esperando o objeto exercicio vir do cliente
                     Usuario usuario = (Usuario) in.readObject();
@@ -75,7 +76,7 @@ public class TrataClienteController extends Thread{
                         out.writeObject("nok");
                     }
                 }
-       
+            
             else if (comando.equalsIgnoreCase("UsuarioLista"))
             {
                     UsuarioDao userdao = new UsuarioDao();

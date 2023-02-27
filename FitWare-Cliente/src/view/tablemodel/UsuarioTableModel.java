@@ -28,7 +28,7 @@ public class UsuarioTableModel extends AbstractTableModel {
     // Retorna o número de colunas da tabela
     @Override
     public int getColumnCount() {
-        return 4;
+        return 3;
     }
 
     // Retorna a informação que será exibida em cada célula
@@ -44,10 +44,8 @@ public class UsuarioTableModel extends AbstractTableModel {
                 return user.getNome();
             case 2:
                 return user.getEmail();
-            case 3:
-                return user.getFoco();
-            default:
-                return "Sem nome";
+           default:
+                return "";
         }
     }
 
@@ -57,13 +55,11 @@ public class UsuarioTableModel extends AbstractTableModel {
     public String getColumnName(int column) {
         switch (column) {
             case 0:
-                return "Codigo";
+                return "Código";
             case 1:
                 return "Nome";
             case 2:
                 return "Email";
-            case 3: 
-                return "Foco";
             default:
                 return "Sem nome";
         }

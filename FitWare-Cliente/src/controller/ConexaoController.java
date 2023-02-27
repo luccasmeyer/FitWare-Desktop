@@ -67,6 +67,24 @@ public class ConexaoController {
         }
     }
     
+        public Boolean usuarioExcluir(Usuario user){
+        String msg = "";
+        try {
+            out.writeObject("usuarioExcluir");
+            msg = (String) in.readObject(); //lendo ok
+            out.writeObject(user); //escrevendo a bike
+            msg = (String) in.readObject(); //lendo ok
+            if (msg.equals("ok")){
+                return true;
+            } else {
+                return false;
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return false;
+        }
+    }
+    
     public ArrayList<Usuario> getUsuarioListaNome(String pesquisa){
         String msg;
         try {
@@ -86,24 +104,6 @@ public class ConexaoController {
             out.writeObject("ExercicioInserir");
             msg = (String) in.readObject(); //lendo ok
             out.writeObject(exer); //escrevendo o exercicio
-            msg = (String) in.readObject(); //lendo ok
-            if (msg.equals("ok")){
-                return true;
-            } else {
-                return false;
-            }
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            return false;
-        }
-    }
-    
-        public Boolean usuarioExcluir(Usuario user){
-        String msg = "";
-        try {
-            out.writeObject("usuarioExcluir");
-            msg = (String) in.readObject(); //lendo ok
-            out.writeObject(user); //escrevendo a bike
             msg = (String) in.readObject(); //lendo ok
             if (msg.equals("ok")){
                 return true;

@@ -7,21 +7,45 @@ package view;
 import javax.swing.JOptionPane;
 import modelDominio.Comum;
 import modelDominio.Usuario;
+import view.tablemodel.UsuarioTableModel;
 
 /**
  *
  * @author aluno
  */
 public class GUsuarioFrom extends javax.swing.JDialog {
-
+    
+    
     private Usuario usuario;
+    private javax.swing.JTable jTableUsuario;
+    private UsuarioTableModel userModel;
+    private javax.swing.JComboBox<String> cmbCampo;
+    private javax.swing.JTextField jtxtPesquisa;
+     private void atualizaTabela(){
+        switch(cmbCampo.getSelectedIndex()){
+            case 1: userModel = new UsuarioTableModel(FitWareCliente.ccont.getUsuarioListaNome(jtxtPesquisa.getText()));
+                break;
+            default: userModel= new UsuarioTableModel(FitWareCliente.ccont.getUsuarioLista());
+        }
+        jTableUsuario.setModel(userModel);
+    }
+    
     /**
      * Creates new form MenuPrincipalFrom
      */
+    private void atualizacampo(){
+      jTextFieldNome.setText(FitWareCliente.ccont.usuario.getNome());
+      jTextFieldSenha.setText(FitWareCliente.ccont.usuario.getSenha()); 
+      jTextFieldEmail.setText(FitWareCliente.ccont.usuario.getEmail());
+    }
+    
     
     public GUsuarioFrom() {
+        this.usuario = usuario;
         initComponents();
+        atualizacampo();
         jLabel1.setText(FitWareCliente.ccont.usuario.getNome());
+       
     }
 
     /**
@@ -56,8 +80,7 @@ public class GUsuarioFrom extends javax.swing.JDialog {
         jLabel9 = new javax.swing.JLabel();
         jComboBoxFoco = new javax.swing.JComboBox<>();
         btnSair1 = new javax.swing.JButton();
-        jComboBox1 = new javax.swing.JComboBox<>();
-        jComboBox2 = new javax.swing.JComboBox<>();
+        jcExercicios = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -195,9 +218,12 @@ public class GUsuarioFrom extends javax.swing.JDialog {
             }
         });
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jcExercicios.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jcExercicios.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcExerciciosActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -223,12 +249,10 @@ public class GUsuarioFrom extends javax.swing.JDialog {
                                     .addComponent(jTextFieldSenha)
                                     .addComponent(jLabel9)
                                     .addComponent(jComboBoxFoco, javax.swing.GroupLayout.PREFERRED_SIZE, 335, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(83, 83, 83)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jComboBox2, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(87, 87, 87)
+                                .addComponent(jcExercicios, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(btnSair1))
-                        .addGap(113, 113, 113)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 227, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 208, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -250,16 +274,12 @@ public class GUsuarioFrom extends javax.swing.JDialog {
                         .addGap(18, 18, 18)
                         .addComponent(jLabel5)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jTextFieldNome, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jLabel6))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(12, 12, 12)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jTextFieldNome, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jcExercicios, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel6)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jTextFieldEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jLabel7)
@@ -325,7 +345,9 @@ public class GUsuarioFrom extends javax.swing.JDialog {
             
         }
     }//GEN-LAST:event_jButton5ActionPerformed
-
+    
+    
+    
     private void btnSair1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSair1ActionPerformed
         ListaUsuarios formuser = new ListaUsuarios();
         formuser.setVisible(true);
@@ -349,6 +371,10 @@ public class GUsuarioFrom extends javax.swing.JDialog {
         usuarios.setVisible(true);
         dispose();
     }//GEN-LAST:event_acUsuariosMouseClicked
+
+    private void jcExerciciosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcExerciciosActionPerformed
+        
+    }//GEN-LAST:event_jcExerciciosActionPerformed
 
     /**
      * @param args the command line arguments
@@ -393,8 +419,6 @@ public class GUsuarioFrom extends javax.swing.JDialog {
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButtonAutenticar;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JComboBox<String> jComboBoxFoco;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -411,5 +435,6 @@ public class GUsuarioFrom extends javax.swing.JDialog {
     private javax.swing.JTextField jTextFieldEmail;
     private javax.swing.JTextField jTextFieldNome;
     private javax.swing.JTextField jTextFieldSenha;
+    private javax.swing.JComboBox<String> jcExercicios;
     // End of variables declaration//GEN-END:variables
 }

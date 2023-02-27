@@ -7,7 +7,6 @@ package view;
 import javax.swing.JOptionPane;
 import modelDominio.Exercicio;
 import modelDominio.Usuario;
-import view.tablemodel.ExercicioTableModel;
 import view.tablemodel.UsuarioTableModel;
 
 /**
@@ -17,6 +16,7 @@ import view.tablemodel.UsuarioTableModel;
 public class ListaUsuarios extends javax.swing.JDialog {
     
     private UsuarioTableModel userModel;
+    private Usuario UsuarioTableModel;
     // Método que atualiza a jTable
     private void atualizaTabela(){
         switch(cmbCampo.getSelectedIndex()){
@@ -63,7 +63,6 @@ public class ListaUsuarios extends javax.swing.JDialog {
         btnSair = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
@@ -146,6 +145,11 @@ public class ListaUsuarios extends javax.swing.JDialog {
                 "ID", "Nome"
             }
         ));
+        jTableUsuario.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTableUsuarioMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTableUsuario);
 
         btnCadastrar.setBackground(new java.awt.Color(76, 86, 219));
@@ -188,13 +192,6 @@ public class ListaUsuarios extends javax.swing.JDialog {
             }
         });
 
-        jButton2.setText("jButton2");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -213,8 +210,6 @@ public class ListaUsuarios extends javax.swing.JDialog {
                         .addGroup(layout.createSequentialGroup()
                             .addComponent(btnSair)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButton2)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                             .addComponent(jButton1)
                             .addGap(18, 18, 18)
                             .addComponent(btnCadastrar))
@@ -237,8 +232,7 @@ public class ListaUsuarios extends javax.swing.JDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(btnCadastrar)
-                        .addComponent(jButton1)
-                        .addComponent(jButton2))
+                        .addComponent(jButton1))
                     .addComponent(btnSair))
                 .addContainerGap(19, Short.MAX_VALUE))
         );
@@ -250,7 +244,6 @@ public class ListaUsuarios extends javax.swing.JDialog {
     private void btnCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarActionPerformed
         GUsuarioFrom formusuario = new GUsuarioFrom();
         formusuario.setVisible(true);
-        dispose();
     }//GEN-LAST:event_btnCadastrarActionPerformed
 
     private void jtxtPesquisaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtxtPesquisaKeyReleased
@@ -281,8 +274,16 @@ public class ListaUsuarios extends javax.swing.JDialog {
         dispose();
     }//GEN-LAST:event_acHomeMouseClicked
 
+    private void jTableUsuarioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableUsuarioMouseClicked
+        
+       Usuario usuario = userModel.getUsuario(jTableUsuario.getSelectedRow());
+       GUsuarioFrom formusuario = new GUsuarioFrom();
+       formusuario.setVisible(true);
+       atualizaTabela();
+    }//GEN-LAST:event_jTableUsuarioMouseClicked
+
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-                if (jTableUsuario.getSelectedRow() >= 0) {
+        if (jTableUsuario.getSelectedRow() >= 0) {
             if (JOptionPane.showConfirmDialog(this, "Tem certeza que deseja excluir?", this.getTitle(), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
                 Usuario usuario = userModel.getUsuario(jTableUsuario.getSelectedRow());
                 if (usuario != null) {
@@ -292,13 +293,6 @@ public class ListaUsuarios extends javax.swing.JDialog {
             }
         }
     }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        GUsuarioFrom usuariofrom = new GUsuarioFrom();
-        usuariofrom.setVisible(true);
-        
-        
-    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -343,7 +337,6 @@ public class ListaUsuarios extends javax.swing.JDialog {
     private javax.swing.JButton btnSair;
     private javax.swing.JComboBox<String> cmbCampo;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JFileChooser jFileChooser1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
