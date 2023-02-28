@@ -5,10 +5,13 @@
 package view;
 
 import java.util.ArrayList;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 import modelDominio.Comum;
 import modelDominio.Exercicio;
 import modelDominio.Usuario;
+import view.tablemodel.GradeTableModel;
 import view.tablemodel.UsuarioTableModel;
 import view.util.ComboBoxExercicio;
 
@@ -24,20 +27,31 @@ public class GUsuarioFrom extends javax.swing.JDialog {
     private UsuarioTableModel userModel;
     private javax.swing.JComboBox<String> cmbCampo;
     private javax.swing.JTextField jtxtPesquisa;
-     private void atualizaTabela(){
-        switch(cmbCampo.getSelectedIndex()){
-            case 1: userModel = new UsuarioTableModel(FitWareCliente.ccont.getUsuarioListaNome(jtxtPesquisa.getText()));
-                break;
-            default: userModel= new UsuarioTableModel(FitWareCliente.ccont.getUsuarioLista());
-        }
-        jTableUsuario.setModel(userModel);
+    private  ArrayList<Exercicio> listaExercicioTabela = new ArrayList<>();
+
+    private void atualizaTabela(){
+       listaExercicioTabela = FitWareCliente.ccont.getExercicioUsuario(usuario.getCodUsuario());
+       DefaultTableModel model = new DefaultTableModel();
+       jTable1.setModel(new GradeTableModel(listaExercicioTabela));
+       
     }
+     
+    
      
      private void preencheComboBoxExercicio() {
         // preenchendo o comboBox dos Marcas
         ArrayList<Exercicio> listaex = new ArrayList<Exercicio>();
+        ArrayList<String> listanomes = new ArrayList<>();
+        Exercicio exercicio= null;
         listaex = FitWareCliente.ccont.getExercicioLista();
-        ComboBoxExercicio.preencheComboBoxExercicio(-1, jcExercicios, listaex, false);
+//        for(int x=0; x<listaex.size(); x++){
+//            exercicio = listaex.get(x);
+//            String aux = "";
+//            aux = exercicio.getNomeExercicio();
+//            listanomes.add(aux);
+//        }
+        // ComboBoxExercicio.preencheComboBoxExercicio(-1, jcExercicios, listaex, false);
+        jcExercicios.setModel(new DefaultComboBoxModel(listaex.toArray()));
     }
     
     /**
@@ -50,12 +64,14 @@ public class GUsuarioFrom extends javax.swing.JDialog {
     }
     
     
-    public GUsuarioFrom() {
+    public GUsuarioFrom(Usuario usuario) {
         this.usuario = usuario;
         initComponents();
         preencheComboBoxExercicio();
+        atualizaTabela();
         atualizacampo();
         jLabel1.setText(FitWareCliente.ccont.usuario.getNome());
+        
        
     }
 
@@ -231,7 +247,7 @@ public class GUsuarioFrom extends javax.swing.JDialog {
             }
         });
 
-        jcExercicios.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jcExercicios.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecionar" }));
         jcExercicios.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jcExerciciosActionPerformed(evt);
@@ -245,7 +261,7 @@ public class GUsuarioFrom extends javax.swing.JDialog {
             }
         });
 
-        jbAddTabela.setText("jButton1");
+        jbAddTabela.setText("Salvar");
         jbAddTabela.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbAddTabelaActionPerformed(evt);
@@ -411,7 +427,7 @@ public class GUsuarioFrom extends javax.swing.JDialog {
     }//GEN-LAST:event_acUsuariosMouseClicked
 
     private void jcExerciciosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcExerciciosActionPerformed
-
+         
     }//GEN-LAST:event_jcExerciciosActionPerformed
 
     private void jcGruposActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcGruposActionPerformed
@@ -419,7 +435,17 @@ public class GUsuarioFrom extends javax.swing.JDialog {
     }//GEN-LAST:event_jcGruposActionPerformed
 
     private void jbAddTabelaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbAddTabelaActionPerformed
-        
+      
+      Exercicio exercicio = (Exercicio) jcExercicios.getSelectedItem();
+      int codUsuario = usuario.getCodUsuario();
+      int codExercicio = exercicio.getCodExercicio();
+      Boolean aux = null;
+      aux = FitWareCliente.ccont.exercicioSalvarIntermediario(codUsuario, codExercicio);
+        if (aux == true) {
+            atualizaTabela();
+        }
+      
+      
     }//GEN-LAST:event_jbAddTabelaActionPerformed
 
     /**
@@ -452,7 +478,7 @@ public class GUsuarioFrom extends javax.swing.JDialog {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new GUsuarioFrom().setVisible(true);
+               
             }
         });
     }

@@ -242,7 +242,7 @@ public class ListaUsuarios extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarActionPerformed
-        GUsuarioFrom formusuario = new GUsuarioFrom();
+        GUsuarioFrom formusuario = new GUsuarioFrom(usuario);
         formusuario.setVisible(true);
     }//GEN-LAST:event_btnCadastrarActionPerformed
 
@@ -275,9 +275,9 @@ public class ListaUsuarios extends javax.swing.JDialog {
     }//GEN-LAST:event_acHomeMouseClicked
 
     private void jTableUsuarioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableUsuarioMouseClicked
-        
+
        Usuario usuario = userModel.getUsuario(jTableUsuario.getSelectedRow());
-       GUsuarioFrom formusuario = new GUsuarioFrom();
+       GUsuarioFrom formusuario = new GUsuarioFrom(usuario);
        formusuario.setVisible(true);
        atualizaTabela();
        dispose();

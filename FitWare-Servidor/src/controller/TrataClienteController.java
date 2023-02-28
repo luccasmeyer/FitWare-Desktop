@@ -88,6 +88,40 @@ public class TrataClienteController extends Thread{
                     UsuarioDao userdao = new UsuarioDao();
                     out.writeObject(userdao.getUsuarioListaNome(nome));
             }
+            else if(comando.equalsIgnoreCase("exercicoTabela")){
+               out.writeObject("ok");
+               int exer = (int) in.readObject();
+               ExercicioDao exerdao = new ExercicioDao();
+                if (exerdao.exercicioTabela(exer) != null) {
+                    Exercicio exercicio = exerdao.exercicioTabela(exer);
+                    out.writeObject(exercicio);
+                }else {
+                    out.writeObject(null);
+                }
+            }
+            else if (comando.equalsIgnoreCase("exercicioSalvarIntermediario")){
+                out.writeObject("ok");
+                int user = (int) in.readObject();
+                int exer = (int) in.readObject();
+                ExercicioDao exerdao = new ExercicioDao();
+                if(exerdao.exercicioSalvarIntermediario(user, exer) == -1){  
+                    out.writeObject("ok");
+                }else {
+                    out.writeObject("nok");
+                }
+               
+                
+            }
+            else if(comando.equalsIgnoreCase("exercicioUsuario")){
+                ArrayList<Exercicio> exercicioUser = new ArrayList<>();
+                out.writeObject("ok");
+                int user = (int) in.readObject();
+                ExercicioDao exerdao = new ExercicioDao();
+                exercicioUser = exerdao.getExercicioUsuario(user);
+                out.writeObject(exercicioUser);
+          
+                
+            }
             else if (comando.equalsIgnoreCase("exercicioInserir")) {
                     out.writeObject("ok");
                     //esperando o objeto bike vir do cliente

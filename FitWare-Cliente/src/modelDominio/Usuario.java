@@ -1,6 +1,7 @@
 package modelDominio;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 /**
  *
@@ -15,7 +16,29 @@ public class Usuario implements Serializable {
     private String senha;
     private int foco;
     private String cref;
+    private ArrayList<Exercicio> listaExerciciosUsuario;
 
+    public Usuario(String nome, String email, String senha, int foco, String cref, ArrayList<Exercicio> listaExerciciosUsuario) {
+        this.nome = nome;
+        this.email = email;
+        this.senha = senha;
+        this.foco = foco;
+        this.cref = cref;
+        this.listaExerciciosUsuario = listaExerciciosUsuario;
+    }
+
+    public Usuario(int codUsuario, String nome, String email, String senha, int foco, String cref, ArrayList<Exercicio> listaExerciciosUsuario) {
+        this.codUsuario = codUsuario;
+        this.nome = nome;
+        this.email = email;
+        this.senha = senha;
+        this.foco = foco;
+        this.cref = cref;
+        this.listaExerciciosUsuario = listaExerciciosUsuario;
+    }
+
+   
+    
     public Usuario(int codUsuario, String nome, String email, String senha, int foco, String cref) {
         this.codUsuario = codUsuario;
         this.nome = nome;

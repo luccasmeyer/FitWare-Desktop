@@ -116,6 +116,62 @@ public class ConexaoController {
         }
     }
     
+    public Exercicio exercicioTabela(int codExercicio){
+        String msg = "";
+        Exercicio exercicio = null;
+        try {
+            out.writeObject("exercicoTabela");
+            msg = (String) in.readObject(); //lendo ok
+            out.writeObject(codExercicio); //escrevendo o exercicio
+            exercicio = (Exercicio) in.readObject();
+            if (exercicio != null){
+                return exercicio;
+            } else {
+                return null;
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return null;
+        }
+    }
+    
+    public Boolean exercicioSalvarIntermediario(int codUsuario, int codExercicio){
+        String msg = "";
+        Exercicio exercicioaux;
+        try {
+            out.writeObject("exercicioSalvarIntermediario");
+            msg = (String) in.readObject();
+            out.writeObject(codUsuario);
+            out.writeObject(codExercicio);
+            msg = (String) in.readObject();  
+            if (msg.equals("ok")) {
+               return true;
+            }else{
+                return false;
+            }
+            
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return false;
+        }
+        
+    }
+
+    
+     public ArrayList<Exercicio> getExercicioUsuario(int codUsuario){
+        String msg = "";
+         try {
+            
+            out.writeObject("exercicioUsuario");
+            msg = (String) in.readObject();
+            out.writeObject(codUsuario);
+            return (ArrayList<Exercicio>)in.readObject(); // Vai retornar a lista de usuarios
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+    
     public Boolean exercicioExcluir(Exercicio exer){
         String msg = "";
         try {

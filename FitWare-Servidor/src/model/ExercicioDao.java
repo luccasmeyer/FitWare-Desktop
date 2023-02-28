@@ -166,6 +166,38 @@ public class ExercicioDao {
         }
     }
     
+        public ArrayList<Exercicio> getExercicioUsuario(int codUsuario){
+        PreparedStatement stmt = null;
+        ArrayList<Exercicio> listaExercicios = new ArrayList<>();
+        
+        try {
+            String sql = "select * from usuario inner join exercicio inner join usuario_has_exercicio on usuario.codUsuario = usuario_has_exercicio.usuario_codUsuario and exercicio.codExercicio = usuario_has_exercicio.exercicio_codExercicio where usuario.codUsuario = ?;";
+            //criar o statement e trocar os parametros
+            stmt = con.prepareStatement(sql); 
+            //trocando os parametros
+            stmt.setInt(1, codUsuario);
+            //Executando o script SQL:
+            ResultSet res = stmt.executeQuery();
+            
+            //Se existe um resultado:
+            while (res.next()){ 
+                Exercicio exer = new Exercicio(res.getInt("exercicio.codExercicio"), res.getString("exercicio.nome"), res.getString("exercicio.series"), res.getString("exercicio.repeticoes"));
+                // Ali em cima, dentro das "" é o nome do campo no banco de dados
+                System.out.println(exer);
+                listaExercicios.add(exer);
+            }
+            // Fechar as conexões e statements:
+            res.close();
+            stmt.close();
+            con.close();
+            return listaExercicios;
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+    
     // Método que retorna todas os usuários cadastradas filtrando por nome
     public ArrayList<Exercicio> getExercicioListaNome(String nomeExercicio){
         PreparedStatement stmt = null;
@@ -197,5 +229,75 @@ public class ExercicioDao {
             e.printStackTrace();
             return null;
         }
+    }
+    public Exercicio exercicioTabela(int codExercicio){
+        PreparedStatement stmt = null;
+        Exercicio exercicio = null;
+        
+        try {
+            String sql = "select * from exercicio where codExercicio = ?";
+            //criar o statement e trocar os parametros
+            stmt = con.prepareStatement(sql); 
+            //trocando os parametros
+            stmt.setInt(1, codExercicio);
+            //Executando o script SQL:
+            ResultSet res = stmt.executeQuery();
+            
+            //Se existe um resultado:
+            while (res.next()){ 
+                Exercicio exer = new Exercicio(res.getInt("codExercicio"), res.getString("nome"), res.getString("descricao"), res.getString("series"), res.getString("repeticoes"), res.getInt("tipo"));
+                // Ali em cima, dentro das "" é o nome do campo no banco de dados
+                System.out.println(exer);
+                exercicio = exer;
+            }
+            // Fechar as conexões e statements:
+            res.close();
+            stmt.close();
+            con.close();
+            return exercicio;
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+    public int exercicioSalvarIntermediario(int codUsuario, int codExercicio)
+    {
+        PreparedStatement stmt = null;
+        try {
+            try {
+               con.setAutoCommit(false);
+                String sql = "insert into usuario_has_exercicio values (?, ?);";
+             stmt = con.prepareStatement(sql);
+               stmt.setInt(1, codUsuario);
+               stmt.setInt(2, codExercicio);
+               stmt.execute();
+            
+                con.commit();
+               return -1; //-1 indica que tudo deu certo
+            } catch (SQLException e) {
+               try {
+                    con.rollback();
+                    e.printStackTrace();
+                    return e.getErrorCode();
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+                    return ex.getErrorCode();
+                }
+            }
+        } finally {
+            try {
+                stmt.close();
+                con.setAutoCommit(true);
+                con.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+                return e.getErrorCode();
+            }
+        }
+    }
+
+    public Object exercicioSalvarIntermediario(int exer) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }
