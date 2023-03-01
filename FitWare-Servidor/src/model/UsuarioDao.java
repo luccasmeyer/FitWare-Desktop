@@ -2,6 +2,9 @@ package model;
 
 import factory.Conector;
 import factory.Conector;
+import java.math.BigInteger;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -22,7 +25,17 @@ public class UsuarioDao {
     public Usuario efetuarLogin(Usuario usr) {
         PreparedStatement stmt = null; // usado para rodar SQL
         Usuario usrselecionado = null;
+        String senhaHash = null;
+        try {
 
+            MessageDigest md = MessageDigest.getInstance("MD5"); // MD5, SHA-1, SHA-256
+
+            BigInteger senhaHashDigitada = new BigInteger(1, md.digest(usr.getSenha().getBytes()));
+            senhaHash = senhaHashDigitada.toString();
+
+        } catch (NoSuchAlgorithmException e) {
+             System.out.println("Erro ao carregar o MessageDigest");
+        }
         try {
             // passando a string SQL que faz o SELECT
             String sql = " select * from usuario "
@@ -30,7 +43,7 @@ public class UsuarioDao {
             stmt = con.prepareStatement(sql);
             //substituir os ? do script SQL
             stmt.setString(1, usr.getNome());
-            stmt.setString(2, usr.getSenha());
+            stmt.setString(2, senhaHash);
 
             // Executando o select
             ResultSet res = stmt.executeQuery();
@@ -70,15 +83,31 @@ public class UsuarioDao {
     //inserir usuário
     public int userInserir(Usuario user)
     {
+      
         PreparedStatement stmt = null;
         try {
             try {
                con.setAutoCommit(false);
+                 
                 String sql = "insert into usuario (nome, email, senha, foco, tipo) values (?,?,?,?, ?)";
              stmt = con.prepareStatement(sql);
+             String senhaHash = null;
+             try {
+
+                    MessageDigest md = MessageDigest.getInstance("MD5"); // MD5, SHA-1, SHA-256
+
+                    BigInteger senhaHashCadastrada = new BigInteger(1, md.digest(user.getSenha().getBytes()));
+                    senhaHash = senhaHashCadastrada.toString();
+                    System.out.println(senhaHashCadastrada);
+
+                    Usuario usr = new Usuario(user.getNome(), senhaHash);
+
+                    } catch (NoSuchAlgorithmException e) {
+                        System.out.println("Erro ao carregar o MessageDigest");
+                    }
                stmt.setString(1, user.getNome());
                stmt.setString(2, user.getEmail());
-                stmt.setString(3, user.getSenha());
+                stmt.setString(3, senhaHash);
                stmt.setInt(4, user.getFoco());
             stmt.setInt(5, 0);
                stmt.execute();

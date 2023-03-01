@@ -242,8 +242,10 @@ public class ListaUsuarios extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarActionPerformed
-        GUsuarioFrom formusuario = new GUsuarioFrom(usuario);
-        formusuario.setVisible(true);
+        GCriarUsuario formcriarusuario = new GCriarUsuario();
+        formcriarusuario.setVisible(true);
+        formcriarusuario.setModal(true);
+        atualizaTabela();
     }//GEN-LAST:event_btnCadastrarActionPerformed
 
     private void jtxtPesquisaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtxtPesquisaKeyReleased
